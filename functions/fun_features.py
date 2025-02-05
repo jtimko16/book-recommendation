@@ -88,18 +88,17 @@ def plot_dominant_color(dominant_color: np.ndarray) -> None:
 
 
 # Main function to process the image and extract features
-def process_book_cover(image: np.ndarray, plot_color: bool = False)-> Tuple[np.ndarray, str]:
+def process_book_cover(image: np.ndarray, verbosity: int = 0)-> Tuple[np.ndarray, str]:
     # Extract dominant color
     dominant_color = extract_dominant_color(image)
 
     # Infer mood based on dominant color
     mood = infer_mood_from_color(dominant_color)
 
-    if plot_color:
+    if verbosity > 0:
         plot_dominant_color(dominant_color)
-
-    # Output extracted features and mood inference
-    print(f"Dominant Color (HSV): {dominant_color}")
-    print(f"Inferred Mood: {mood}")
+        # Print extracted features and mood inference
+        print(f"Dominant Color (HSV): {dominant_color}")
+        print(f"Inferred Mood: {mood}")
 
     return dominant_color, mood
