@@ -46,32 +46,25 @@ def infer_mood_from_color(dominant_color):
     saturation = dominant_color[1]
     value = dominant_color[2]
     
-    # Convert hue to degrees (0-180 scale in OpenCV, map to 0-360)
-    hue = hue * 2
-    
-    # Mood based on hue
-    if hue >= 0 and hue < 60:  # Red
-        mood = "Energetic or Passionate"
-    elif hue >= 60 and hue < 180:  # Green, Yellow
-        mood = "Calm, Natural or Hopeful"
-    elif hue >= 180 and hue < 240:  # Blue
-        mood = "Sad or Mysterious"
-    elif hue >= 240 and hue < 360:  # Purple
-        mood = "Introspective or Romantic"
-    else:
-        mood = "Neutral"
-    
-    # Mood adjustment based on brightness (value)
+    # Convert hue from OpenCV's 0-180 range to 0-360 degrees
+    hue *= 2
+
+    # General mood classification
+    if hue < 60 or hue >= 300:  # Reds
+        mood = "Energetic"
+    elif hue < 180:  # Greens and Yellows
+        mood = "Calm"
+    else:  # Blues and Purples
+        mood = "Mysterious"
+
+    # Adjust mood based on brightness
     if value < 80:
-        mood += " with a darker tone"
+        mood += " and dark"
     elif value > 200:
-        mood += " with a brighter tone"
-    
-    # Mood adjustment based on saturation
-    if saturation < 50:
-        mood += " and muted colors"
-    else:
-        mood += " with vibrant colors"
+        mood += " and bright"
+
+    # Adjust mood based on saturation
+    mood += " with muted colors" if saturation < 50 else " with saturated colors"
     
     return mood
 
