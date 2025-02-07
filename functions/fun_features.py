@@ -33,7 +33,7 @@ def load_images_from_folder(folder_path: str) -> list[Tuple[str, np.ndarray]]:
     return images
 
 
-def extract_dominant_color(image: np.ndarray, k: int = 1) -> np.ndarray:
+def extract_dominant_color(image: np.ndarray, k: int = 1) -> Tuple[float, float, float]:
     # Convert image to HSV
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
@@ -47,8 +47,15 @@ def extract_dominant_color(image: np.ndarray, k: int = 1) -> np.ndarray:
     )
 
     # Extract the dominant color (in HSV space)
-    dominant_color = centers[0]  # In HSV
-    return dominant_color
+    dominant_color_hsv = centers[0]  # In HSV
+    
+    # Convert HSV to BGR (OpenCV uses BGR by default)
+    dominant_color_bgr = cv2.cvtColor(np.uint8([[dominant_color_hsv]]), cv2.COLOR_HSV2BGR)[0][0]
+    
+    # Convert BGR to RGB
+    dominant_color_rgb = tuple(dominant_color_bgr[::-1])
+    
+    return dominant_color_rgb
 
 
 # Function to infer the mood based on color
