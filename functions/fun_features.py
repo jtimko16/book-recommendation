@@ -23,7 +23,9 @@ def load_images_from_folder(folder_path: str) -> list[Tuple[str, np.ndarray]]:
         # Load the image without resizing
         image = cv2.imread(image_path)
 
-        if image is not None:  # Check if the image was loaded properly
+        if image is not None:  # Check if the image was loaded 
+            # Convert BGR to RGB
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             images.append((image_file, image))
         else:
             print(f"Failed to load {image_file}")
