@@ -1,3 +1,4 @@
 data/*
 .venv/*
 functions/__pycache__/*
+notebooks/model_data/model_data_wo_extern.csv
