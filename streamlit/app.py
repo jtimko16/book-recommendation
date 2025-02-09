@@ -22,9 +22,13 @@ st.write("Select a book title to get recommendations!")
 # --- Book Input (Dropdown with Search) ---
 selected_book = st.selectbox("Choose a book:", book_titles)
 
+## Find ISBN of selected book
+selected_ISBN = df[df['Book-Title'] == selected_book]['ISBN'].values[0]
+
+
 ## Find similar books
-recommendations = recommend_books(selected_book, df)
-not_reccomendations = not_recommended_books(selected_book, df)
+recommendations = recommend_books(selected_ISBN, df)
+not_reccomendations = not_recommended_books(selected_ISBN, df)
 merge_reccomendations = recommendations.merge(not_reccomendations, how='left', left_on='Book-Title', right_on='Book-Title').fillna(0)
 merge_reccomendations['Recommendation_Percentage'] =100* merge_reccomendations['Count_recommend'] / (merge_reccomendations['Count_recommend'] + merge_reccomendations['Count_not_recommend'])
 
@@ -40,5 +44,5 @@ if selected_book:
 # --- Display Recommendations ---
 st.write(f"📚 **Top Recommendations for {selected_book}**:"
             f"")  
-st.table(recommendations)
+st.table(top_books.reset_index(drop=True))
 
