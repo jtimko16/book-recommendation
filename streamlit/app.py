@@ -6,7 +6,7 @@ from fun_model import recommend_books, not_recommended_books, rank_books
 # --- Load Data ---
 @st.cache_data
 def load_data():
-    return pd.read_csv('data/model_data_assoc_rules.csv')
+    return pd.read_csv('streamlit/model_data_assoc_rules.csv')
 
 ## Book titles
 df = load_data()
