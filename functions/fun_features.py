@@ -23,7 +23,7 @@ def load_images_from_folder(folder_path: str) -> list[Tuple[str, np.ndarray]]:
         # Load the image without resizing
         image = cv2.imread(image_path)
 
-        if image is not None:  # Check if the image was loaded 
+        if image is not None:  # Check if the image was loaded
             # Convert BGR to RGB
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             images.append((image_file, image))
@@ -48,13 +48,15 @@ def extract_dominant_color(image: np.ndarray, k: int = 1) -> Tuple[float, float,
 
     # Extract the dominant color (in HSV space)
     dominant_color_hsv = centers[0]  # In HSV
-    
+
     # Convert HSV to BGR (OpenCV uses BGR by default)
-    dominant_color_bgr = cv2.cvtColor(np.uint8([[dominant_color_hsv]]), cv2.COLOR_HSV2BGR)[0][0]
-    
+    dominant_color_bgr = cv2.cvtColor(
+        np.uint8([[dominant_color_hsv]]), cv2.COLOR_HSV2BGR
+    )[0][0]
+
     # Convert BGR to RGB
     dominant_color_rgb = tuple(dominant_color_bgr[::-1])
-    
+
     return dominant_color_rgb
 
 
@@ -97,7 +99,7 @@ def plot_dominant_color(dominant_color: np.ndarray) -> None:
 
 
 # Main function to process the image and extract features
-def process_book_cover(image: np.ndarray, verbosity: int = 0)-> Tuple[np.ndarray, str]:
+def process_book_cover(image: np.ndarray, verbosity: int = 0) -> Tuple[np.ndarray, str]:
     # Extract dominant color
     dominant_color = extract_dominant_color(image)
 
