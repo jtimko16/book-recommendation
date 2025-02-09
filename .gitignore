@@ -2,3 +2,4 @@ data/*
 .venv/*
 functions/__pycache__/*
 notebooks/model_data/model_data_wo_extern.csv
+streamlit/__pycache__/fun_model.cpython-311.pyc
